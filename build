@@ -1,0 +1,7 @@
+#!/bin/bash
+LEX_CONFIG="JLang.lex"
+OUTFILE="out"
+rm $OUTFILE
+rm *.yy.c
+flex $LEX_CONFIG
+gcc lex.yy.c -o $OUTFILE -ll || -lfl
