@@ -1,24 +1,32 @@
-void main
+int test(int a, int b)
 {
-	int a;
-	int b;
-	for (int i = 0; i < 5; i++)
-	{	
-		if (i == 3)
-			print i;
-		if(i == a || i == b)
-		{
-			print a;
-			print b;
-		}
+	int i = 0;
+	for (i = 5; i >0; i--)
+	{
+		out i;
 	}
-	int result = myTestSumFunc(a, b);
+	return a + b;
 }
+void main()
+{
+	int a = test(1, 2);
+	int b;
+	int i;
+	int c;
+	a = 5;
+	result = test(5, 4);
+
+	for (i = 0; i < 5; i++)
+	{	
+		int ac = 5;
 //single-line comment
 /*
 *Multiline comment
 */
-func int myTestSumFunc(int a, int b)
-{
-	return a + b;
+
+		out i;
+		in a;
+		in b;
+	}
+	result = test(5, a);
 }

@@ -5,32 +5,60 @@
  * gcc lex.yy.c -o flexout -ll || -lfl
  * flexout sample.jl
  */
+%{
+#define YYSTYPE double
+#include "JLang.tab.h"
+int lineNumber = 1;
+%}
 
 %x comment
 %x line_comment
 
 %%
 
+main {return MAIN;}
+return {return RETURN;}
+void {return VOID;}
+int  {return INT;}
+char {return CHAR ;}
+\* {return POINTER;}
+\& {return REF;}
+func {return FUNCTION;}
+out  {return OUT;}
+in  {return IN;}
+for   {return FOR;}
+[a-z_][a-z0-9_]* {return IDENT;}
+\,  {return COMMA;}
+\;  {return SEMICOLON;}
+\( {return LEFT_BRACKET;}
+\) {return RIGHT_BRACKET;}
+\{ {return LEFT_FIGURE;}
+\} {return RIGHT_FIGURE;}
+= {return ASSIGNMENT;}
+[0-9]+ {return NUMBER;}
+\n	{lineNumber++;}
+"!"	{return  NOT;}
+"*"	{return  MULT;}
+"/"	{return  DIV;}
+"-"	{return  MINUS;}
+"+"	{return  PLUS;}
+"=="	{return  EQUAL;}
+"!="	{return  NOT_EQUAL;}
+"*="	{return  MULT_AND_ASSIGN;}
+"/="	{return  DIV_AND_ASSIGN;}
+"-="	{return  MINUS_AND_ASSIGN;}
+"+="	{return  PLUS_AND_ASSIGN;}
+"++"	{return  INC;}
+"--"	{return  DEC;}
+">="	{return  MORE_EQUAL;}
+"<="	{return  LESS_EQUAL;}
+">"	{return  MORE;}
+"<"	{return  LESS;}
+"&&"	{return  AND;}
+"||"	{return  OR;}
+\"([^"]|\\\")*\" {return STRING;}
 
-[0-9]+ {printf("NUMBER");}
-\& {printf("REF");}
-\* {printf("POINTER");}
-func {printf("FUNCTION");}
-return {printf("RETURN");}
-print  {printf("PRINT");}
-scan  {printf("SCAN");}
-void {printf("VOID");}
-int  {printf("INT");}
-char {printf("CHAR");}
-for {printf("FOR");}
-[a-z_][a-z0-9_]* {printf("IDENT");}
-\( {printf("LEFT_BRACKET");}
-\) {printf("RIGHT_BRACKET");}
-\{ {printf("LEFT_FIGURE");}
-\} {printf("RIGHT_FIGURE");}
-= {printf("ASSIGNMENT");}
-\,  {printf("COMMA");}
-\;  {printf("SEMICOLON");}
+
 
 \/\*	{ printf("MULTILINE_COMMENT_BEGIN"); BEGIN(comment); }
 <comment>[^*\n]* {printf("MULTILINE_COMMENT");}
@@ -40,20 +68,12 @@ for {printf("FOR");}
 \/\/   {BEGIN (line_comment); }
 <line_comment>.* {printf("SINGLELINE_COMMENT_BEGIN");} 
 <line_comment>\n {printf("SINGLELINE_COMMENT_END");BEGIN (INITIAL);}
-\&{2}|\|{2}|={2}|!=|>|>=|<|<= {printf("LOGIC");}
-\+{1,2}|\-{1,2}|\*|\\ {printf("MATH");}
 
 %%
 
-main( argc, argv )
-int argc;
-char **argv;
+int yywrap(){}
+
+int yyerror(const char *str)
 {
-	++argv, --argc;
-	if ( argc > 0 )
-		yyin = fopen( argv[0], "r" );
-		else
-			yyin = stdin;
-	yylex();
-	printf("\n");
+   	printf("\nline %d: %s\n", lineNumber, str);
 }
