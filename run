@@ -1,0 +1,14 @@
+#!/bin/bash
+LEX="JLang.lex"
+BISON="JLang.y"
+OUT="JLang"
+SAMPLE="sample.jl"
+
+rm $OUT
+rm *.tab.*
+rm *.yy.c
+bison -v -d $BISON
+flex $LEX
+gcc -o $OUT main.c -lfl
+
+./$OUT $SAMPLE
