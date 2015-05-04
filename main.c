@@ -1,4 +1,4 @@
-#include "JLang.tab.c"
+#include "jlang.tab.c"
 #include "lex.yy.c"
 
 int main (int argc, char** argv)

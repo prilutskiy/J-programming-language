@@ -1,32 +1,69 @@
-int test(int a, int b)
+void f47(char & s, int g)
 {
-	int i = 0;
-	for (i = 5; i >0; i--)
-	{
-		out i;
-	}
-	return a + b;
+	char * test;
+	
+	outp(s);
 }
-void main()
+
+void f49(char str, int k)
 {
-	int a = test(1, 2);
-	int b;
-	int i;
-	int c;
-	a = 5;
-	result = test(5, 4);
+	outp(str);
+}
 
-	for (i = 0; i < 5; i++)
-	{	
-		int ac = 5;
-//single-line comment
-/*
-*Multiline comment
-*/
+void f50()
+{	
+	int number;  // Comment
+	char ch; int x; int i; 
+	int * p;
+	char ss[] = "hello"; //
+	int tmp[10];
+	
+	//	while(number != /*test*/ 0)
+	//	{
+	number = number + 25;
+	number = 5-7;
+	f49(45);
+	tmp[1] = -5 / 9 + 8 / 2 + tmp[5+number];
+//	ch = 5 * 9 + 8 / 2 * f49(45, 25);
+	
+	outp(152);
+	outp("test");
+	number--;
+	//	int i;
 
-		out i;
-		in a;
-		in b;
+	
+	//	}
+	
+	inp(ch);
+}
+
+
+int main() 
+{
+	int number;  // Comment
+	char ch; int x; int i;
+	char ss[] = "hello"; //
+	int tmp[10];
+
+	outp(ss);
+
+	f50();
+
+
+	
+	number = 15; 
+	tmp[5] = 4;
+	
+	wh(number != /*test*/ 0)
+	{		
+		number = 5-7+4;
+		outp("test");
+		
+		number--;
+	//	int i;
+		
+		
 	}
-	result = test(5, a);
+	
+	inp(ch);
 }

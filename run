@@ -1,7 +1,7 @@
 #!/bin/bash
-LEX="JLang.lex"
-BISON="JLang.y"
-OUT="JLang"
+LEX="jlang.lex"
+BISON="jlang.y"
+OUT="jlang"
 SAMPLE="sample.jl"
 
 rm $OUT
