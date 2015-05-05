@@ -2,100 +2,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "jlib.h"
 
 #define YYDEBUG 1	
 extern int lineNumber;
 
-// Óçåë äåðåâà	
-struct treeNode
-{
-	int nodeType;          // Òèï óçëà äåðåâà / ñåìàíòè÷åñêîãî çíà÷åíèÿ
-	union
-	{
-		struct treeNode *node;
-		struct variableInfo* var;
-		struct constantInfo *constant;
-		struct procedureInfo* func;    			
-		struct paramsListNode* params;
-	} value;
-	struct treeNode *left;
-	struct treeNode *right;
-};
 
+struct procedureInfo* MAIN_INFO;
 
-//--------------------------------------------------
-struct procedureInfo
-{
-    char *name;
-    char type;
-    struct paramsListNode *params;
-    struct treeNode *operations;
-	struct variableListNode* varDeclaratons;
-};
-
-struct funcTableNode
-{
-    struct procedureInfo *func;
-    struct funcTableNode *next;
-};
-//----------------------------------------------------
-
-struct parameterInfo
-{
-    char* name;
-    char type;
-    struct variableInfo* var;
-	struct treeNode* node;
-};
-
-struct paramsListNode
-{
-    struct parameterInfo* param;
-    struct paramsListNode* next;
-};
-//---------------------------------------------------
-
-struct arrayInfo
-{
-    int sizeOfElement;
-    int length;
-    void *ptr;
-};
-
-struct constantInfo
-{
-    char type;
-    union
-    {
-        int intValue;
-        char charValue;
-        struct arrayInfo* arrValue;
-    } value;
-};
-
-//-------------------------------------------------
-struct variableInfo
-{
-    int isParam;
-    char* name;
-    char type;
-    union
-    {
-        int intValue;
-        char charValue;
-        struct arrayInfo* arrayValue;
-    } value;
-};
-
-struct variableListNode
-{
-    struct variableInfo *var;
-    struct variableListNode *next;
-};
-//--------------------------------------------------
-
-
-//struct treeNode* treeRoot = NULL;       // Êîðåíü äåðåâà
+struct treeNode* treeRoot = NULL;       // Êîðåíü äåðåâà
 struct funcTableNode* FuncTable = NULL; // Ñïèñîê ôóíêöèé
 struct variableListNode* curVarList = NULL; // Ñïèñîê îáúÿâëåííûõ ïåðåìåííûõ òåêóùåé ôóíêöèè
 struct paramsListNode* curParamList = NULL;
@@ -174,6 +89,13 @@ axiom:
 main_func:
 		type MAIN LEFT_BRACKET declaration_args RIGHT_BRACKET LEFT_FIGURE declarations operators RIGHT_FIGURE 
 		{
+			MAIN_INFO = (struct procedureInfo*)malloc(sizeof(struct procedureInfo));
+			
+			MAIN_INFO->name = "MAIN";
+			MAIN_INFO->type = $<num>1;
+			MAIN_INFO->params = NULL;
+			MAIN_INFO->operations = $<node>8;
+			MAIN_INFO->varDeclaratons = curVarList;		
 			if(/*errors == 0*/  1)
 			{
 				// Ïå÷àòàåì èíôîðìàöèþ î ôóíêöèÿõ
@@ -206,7 +128,7 @@ procedures:
 procedureDeclaration: 	
 			type IDENT LEFT_BRACKET declaration_args RIGHT_BRACKET
 			{
-				// Äîáàâëÿåì ôóíêöèþ â ñïèñîê è âîçâðàùàåì å¸ ñòðóêòóðó
+				// Äîáàâëÿåì ôóíêöèþ â ñïèñîê è âîçâðàùàåì åž ñòðóêòóðó
 				struct procedureInfo* func = Addprocedure($<num>1, $<str>2.ptr, curParamList);
 				curParamList = NULL;
 				if(func == NULL)
@@ -397,6 +319,7 @@ arg:
 		$<node>$ = GetTreeNode(1, NULL, NULL);
 		$<node>$->value.constant = constant;		
 	}
+	| array_access
 	;
 	
 	
@@ -1132,3 +1055,4 @@ struct paramsListNode* AddToArgsList(struct treeNode* node, struct paramsListNod
     listNode->param = parameter;
     return listNode;
 }
+

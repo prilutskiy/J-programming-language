@@ -1,13 +1,13 @@
-void f47(char & s, int g)
+void f47(char s, int g)
 {
 	char * test;
 	
 	outp(s);
 }
 
-void f49(char str, int k)
+void f49(int num)
 {
-	outp(str);
+	outp(num);
 }
 
 void f50()
@@ -18,11 +18,20 @@ void f50()
 	char ss[] = "hello"; //
 	int tmp[10];
 	
+	outp(ss);
 	//	while(number != /*test*/ 0)
 	//	{
+	number = 25;
+	outp(number);
+
+	number = number;
+	outp(number);
+
 	number = number + 25;
-	number = 5-7;
-	f49(45);
+	outp(number);
+	number = 7 - 5;
+	outp(number);
+	f49(525);
 	tmp[1] = -5 / 9 + 8 / 2 + tmp[5+number];
 //	ch = 5 * 9 + 8 / 2 * f49(45, 25);
 	
@@ -34,7 +43,8 @@ void f50()
 	
 	//	}
 	
-	inp(ch);
+	inp(ss);
+	outp(ss);
 }
 
 
@@ -42,9 +52,11 @@ int main()
 {
 	int number;  // Comment
 	char ch; int x; int i;
-	char ss[] = "hello"; //
+	char ss[] = "Hi!"; //
 	int tmp[10];
 
+	outp(22);
+	outp("Hello World!");
 	outp(ss);
 
 	f50();
@@ -52,18 +64,23 @@ int main()
 
 	
 	number = 15; 
-	tmp[5] = 4;
+	outp(number);
+
+	//outp(tmp{5]);
+
+	number = 2;
 	
 	wh(number != /*test*/ 0)
 	{		
-		number = 5-7+4;
 		outp("test");
-		
-		number--;
+		outp(number);
+		number = number - 1;
 	//	int i;
 		
 		
 	}
 	
-	inp(ch);
+	inp(ss);
+	outp(ss);
+
 }
